@@ -18,23 +18,23 @@ class AcquisitionService {
         // Set of downlink passes, grouped by Station and Satellite
         this.downlinkPasses = {
             'svalbard': {'s1a': [], 's2a': [], 's2b': [], 's3a': [], 's3b': []},
-            'inuvik': {'s2a': [], 's2b': []},
+            'inuvik': {'s1a': [], 's2a': [], 's2b': []},
             'maspalomas': {'s1a': [], 's2a': [], 's2b': []},
             'matera': {'s1a': [], 's2a': [], 's2b': []},
             'neustrelitz': {'s1a': []},
-            's5p-dlr': {'s5p': []}
+            'dlr': {'s5p': []}
         };
 
         // Set of anomalies, grouped by Station, and divided by "Ground Segment" and "Space Segment"
         this.downlinkAnomalies = {
             'svalbard': {'s1a': {'acq': [], 'sat': [], 'other': []}, 's2a': {'acq': [], 'sat': [], 'other': []}, 's2b': {'acq': [], 'sat': [], 'other': []},
                          's3a': {'acq': [], 'sat': [], 'other': []}, 's3b': {'acq': [], 'sat': [], 'other': []}},
-            'inuvik': {'s2a': {'acq': [], 'sat': [], 'other': []}, 's2b': {'acq': [], 'sat': [], 'other': []}},
+            'inuvik': {'s1a': {'acq': [], 'sat': [], 'other': []}, 's2a': {'acq': [], 'sat': [], 'other': []}, 's2b': {'acq': [], 'sat': [], 'other': []}},
             'maspalomas': {'s1a': {'acq': [], 'sat': [], 'other': []}, 's2a': {'acq': [], 'sat': [], 'other': []}, 's2b': {'acq': [], 'sat': [], 'other': []}},
             'matera': {'s1a': {'acq': [], 'sat': [], 'other': []}, 's2a': {'acq': [], 'sat': [], 'other': []}, 's2b': {'acq': [], 'sat': [], 'other': []}},
             'neustrelitz': {'acq': [], 'sat': [], 'other': []},
             'edrs': {'s1a': {'acq': [], 'sat': [], 'other': []}},
-            's5p-dlr': {'s5p': {'acq': [], 'sat': [], 'other': []}}
+            'dlr': {'s5p': {'acq': [], 'sat': [], 'other': []}}
         };
 
         // Set of EDRS passes, grouped by Satellite
@@ -84,7 +84,7 @@ class AcquisitionService {
         if (response['authorized'] === true) {
             var time_period_sel = document.getElementById('time-period-select');
             if (time_period_sel.options.length == 4) {
-                time_period_sel.append(new Option('Previous Quarter', 'prev-quarter'));
+                time_period_sel.append(new Option(getPreviousQuarterRange(), 'prev-quarter'));
             }
 
             // Programmatically select the previous quarter as the default time range
@@ -111,22 +111,20 @@ class AcquisitionService {
         // Clear previous data, if any
         this.downlinkPasses = {
             'svalbard': {'s1a': [], 's2a': [], 's2b': [], 's3a': [], 's3b': []},
-            'inuvik': {'s2a': [], 's2b': []},
+            'inuvik': {'s1a': [], 's2a': [], 's2b': []},
             'maspalomas': {'s1a': [], 's2a': [], 's2b': []},
             'matera': {'s1a': [], 's2a': [], 's2b': []},
             'neustrelitz': {'s1a': []},
-            's5p-dlr': {'s5p': []}
         };
 
         this.downlinkAnomalies = {
             'svalbard': {'s1a': {'acq': [], 'sat': [], 'other': []}, 's2a': {'acq': [], 'sat': [], 'other': []}, 's2b': {'acq': [], 'sat': [], 'other': []},
                          's3a': {'acq': [], 'sat': [], 'other': []}, 's3b': {'acq': [], 'sat': [], 'other': []}},
-            'inuvik': {'s2a': {'acq': [], 'sat': [], 'other': []}, 's2b': {'acq': [], 'sat': [], 'other': []}},
+            'inuvik': {'s1a': {'acq': [], 'sat': [], 'other': []}, 's2a': {'acq': [], 'sat': [], 'other': []}, 's2b': {'acq': [], 'sat': [], 'other': []}},
             'maspalomas': {'s1a': {'acq': [], 'sat': [], 'other': []}, 's2a': {'acq': [], 'sat': [], 'other': []}, 's2b': {'acq': [], 'sat': [], 'other': []}},
             'matera': {'s1a': {'acq': [], 'sat': [], 'other': []}, 's2a': {'acq': [], 'sat': [], 'other': []}, 's2b': {'acq': [], 'sat': [], 'other': []}},
             'neustrelitz': {'s1a': {'acq': [], 'sat': [], 'other': []}},
             'edrs': {'s1a': {'acq': [], 'sat': [], 'other': []}, 's2a': {'acq': [], 'sat': [], 'other': []}, 's2b': {'acq': [], 'sat': [], 'other': []}},
-            's5p-dlr': {'s5p': {'acq': [], 'sat': [], 'other': []}}
         };
 
         // Clear pie charts and boxes
@@ -136,7 +134,7 @@ class AcquisitionService {
         // Acknowledge the invocation of rest APIs
         console.info("Invoking Acquisitions retrieval...");
 
-        // Execute asynchrounous AJAX call
+        // Execute asynchronous AJAX call
         if (selected_time_period === 'day') {
             asyncAjaxCall('/api/reporting/cds-acquisitions/last-24h', 'GET', {},
                 this.successLoadAcquisitions.bind(this), this.errorLoadAcquisitions);
@@ -170,6 +168,9 @@ class AcquisitionService {
             // Auxiliary variables
             var element = rows[i]['_source'];
 
+            // Skip S5P passes, not managed in the framework of Coord Desk
+            if (element['satellite_id'] === 'S5P') continue ;
+
             // Parse the downlink operation
             var downlink = {};
             downlink['satellite_id'] = element['satellite_id'];
@@ -180,47 +181,39 @@ class AcquisitionService {
             downlink['front_end_status'] = element['front_end_status'];
             downlink['antenna_status'] = element['antenna_status'];
             downlink['delivery_push_status'] = element['delivery_push_status'];
-            downlink['notes'] = element['notes'];
-            downlink['failed_frames_perc'] = element['fer_downlink'] * 100 ;
+            downlink['fer_data'] = element['fer_data'];
             downlink['acquisition_service_status'] = (downlink['antenna_status'] === 'OK'
-                && downlink['delivery_push_status'] === 'OK') ? 'OK' : 'NOK';
+                && downlink['delivery_push_status'] === 'OK' && downlink['front_end_status']) ? 'OK' : 'NOK';
 
-            // Check the presence of the "cams_origin" attribute.
+            // Retrieve the CAMS origin of the anomaly, plus description and notes
             try {
-
-                // Retrieve the CAMS origin of the anomaly
                 downlink['origin'] = element['cams_origin'];
-
-                // If a link with a CAMS anomaly is present, and if the "notes" field is empty,
-                // fill it with the CAMS anomaly description
-                if (!downlink['notes'].trim()) {
-                    downlink['notes'] = element['cams_description'];
-                }
+                downlink['description'] = element['cams_description'];
+                downlink['notes'] = element['notes'];
             } catch (exception) {
                 downlink['origin'] = '';
+                downlink['description'] = '';
+                downlink['notes'] = '';
             }
 
             // Store the downlink operation in the member class state vector
-            // Skip S5P passes, not managed in the framework of Coord Desk
             try {
                 this.downlinkPasses[downlink['station'].toLowerCase()][downlink['satellite_id'].toLowerCase()].push(downlink);
             } catch (exception) {
                 let sat = downlink['satellite_id'];
                 let stat = element['ground_station'];
-                // console.debug('Skipping pass of ' + sat + ' on ' + stat);
+                console.warn('Skipping pass of ' + sat + ' on ' + stat);
                 continue ;
             }
 
             // Store the reference to the anomaly (if present) in the member class state vector
-            if (downlink['origin'] && downlink['origin'].trim() != '') {
+            if (downlink['fer_data'] > 1e-6 && downlink['origin'] && downlink['origin'].trim() != ''
+                    && !downlink['description'].includes('No impact on completeness')) {
                 if (downlink['origin'].includes('Acquis')) {
-                    console.info(downlink['notes']);
                     this.downlinkAnomalies[downlink['station'].toLowerCase()][downlink['satellite_id'].toLowerCase()]['acq'].push(downlink['notes']);
-                } else if (downlink['origin'].includes('Sat')) {
-                    console.info(downlink['notes']);
+                } else if (downlink['origin'].includes('Sat') || downlink['origin'].includes('CAM')) {
                     this.downlinkAnomalies[downlink['station'].toLowerCase()][downlink['satellite_id'].toLowerCase()]['sat'].push(downlink['notes']);
                 } else {
-                    console.info(downlink['notes']);
                     this.downlinkAnomalies[downlink['station'].toLowerCase()][downlink['satellite_id'].toLowerCase()]['other'].push(downlink['notes']);
                 }
             }
@@ -244,12 +237,14 @@ class AcquisitionService {
             name = 'Maspalomas';
         } else if (element['ground_station'].includes('SGS')) {
             name = 'Svalbard';
-        } else if (element['ground_station'].includes('INS') || element['ground_station'].includes('INU')) {
+        } else if (element['ground_station'].includes('INS')) {
             name = 'Inuvik';
         } else if (element['ground_station'].includes('MTI')) {
             name = 'Matera';
         } else if (element['ground_station'].includes('NSG')) {
             name = 'Neustrelitz';
+        } else if (element['ground_station'].includes('DLR')) {
+            name = 'DLR';
         } else {
             console.warn('Unknown GS: ' + element['ground_station']);
         }
@@ -257,8 +252,8 @@ class AcquisitionService {
     }
 
     clearGlobalBoxes() {
-        ['planned-acquisitions', 'successful-acquisitions', 'satellite-failures', 'acquisition-failures'].
-                forEach(function(item) {
+        ['planned-acquisitions', 'successful-acquisitions', 'satellite-failures', 'acquisition-failures',
+                'other-failures'].forEach(function(item) {
             var boxId = item.toLowerCase() + '-global-box';
             $('#' + boxId).html(
                 '<div class="spinner">' +
@@ -303,6 +298,8 @@ class AcquisitionService {
         $('#satellite-failures-global-box').text(sat + ' (' + satPerc.toFixed(2) + '%)');
         var acqPerc = acq * 100.0 / tot;
         $('#acquisition-failures-global-box').text(acq + ' (' + acqPerc.toFixed(2) + '%)');
+        var othPerc = other * 100.0 / tot;
+        $('#other-failures-global-box').text(other + ' (' + othPerc.toFixed(2) + '%)');
     }
 
     refreshPieChartsAndBoxes() {
@@ -319,6 +316,7 @@ class AcquisitionService {
         var data = {};
         var totPasses = 0, failedPassesAcq = 0, failedPassesSat = 0, failedPassesOther = 0;
         for (const station of Object.keys(acquisitionService.downlinkPasses)) {
+            if (station.toUpperCase().includes('DLR')) continue ;
             for (const [satellite, passes] of Object.entries(acquisitionService.downlinkPasses[station])) {
                 totPasses += acquisitionService.downlinkPasses[station][satellite].length;
                 failedPassesAcq += acquisitionService.downlinkAnomalies[station][satellite]['acq'].length;
@@ -417,10 +415,12 @@ class AcquisitionService {
             edrs['status'] = element['total_status'];
             edrs['station'] = element['ground_station'];
             edrs['notes'] = element['notes'];
+            edrs['fer_data'] = element['fer_data'];
 
             // Collect CAMS anomaly origin
             try {
                 edrs['origin'] = element['cams_origin'];
+                edrs['description'] = element['cams_description'];
             } catch (exception) {
                 edrs['origin'] = '';
             }
@@ -431,11 +431,11 @@ class AcquisitionService {
             // Store the reference to the anomaly (if present) in the member class state vector
             if (edrs['origin'] && edrs['origin'].trim() != '') {
                 if (edrs['origin'].includes('Acquis')) {
-                    this.EDRSAnomalies[edrs['satellite'].toLowerCase()]['acq'].push(edrs['notes']);
+                    this.EDRSAnomalies[edrs['satellite'].toLowerCase()]['acq'].push(edrs['description']);
                 } else if (edrs['origin'].includes('Sat')) {
-                    this.EDRSAnomalies[edrs['satellite'].toLowerCase()]['sat'].push(edrs['notes']);
+                    this.EDRSAnomalies[edrs['satellite'].toLowerCase()]['sat'].push(edrs['description']);
                 } else {
-                    this.EDRSAnomalies[edrs['satellite'].toLowerCase()]['other'].push(edrs['notes']);
+                    this.EDRSAnomalies[edrs['satellite'].toLowerCase()]['other'].push(edrs['description']);
                 }
             }
         }

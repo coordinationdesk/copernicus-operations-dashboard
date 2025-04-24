@@ -59,15 +59,27 @@
 									<div id="description" class="collapse hide" data-parent="#accordion"
 										 aria-labelledby="heading-description">
 										<div class="card-body">
-											This view summarizes the global status of the Acquisition Service. The page
-											is
-											divided into two sections: <br>
-											- Global acquisitions statistics, per Ground Station (the violet boxes);<br>
-											- Details on acquisition failures (the pie charts);<br>
-											Click on a pie chart to display the anomalies causing the discontinuity in
-											the
-											system availability. By default, results are referred to the previous
-											completed quarter.
+											This view summarizes the global statistics of the Acquisition Service, in
+											the selected time range. The page
+											is divided into three main sections: <br>
+											- Global acquisitions statistics, considering all stations;<br>
+											- Acquisition statistics per Ground Station (the violet boxes);<br>
+											- Details on acquisition failures (the pie charts).<br>
+											In the Global acquisition statistics, the total number of planned vs
+											successful passes is reported. As per the failed passes, according to the
+											most recent KPI definition,
+											a pass over a stations is deemed as "FAILED" in the event that the ratio of
+											error data exceeds 10E-6.
+											The possible causes of failures are:
+											<br>
+											- Acquisition Service problems;<br>
+											- Satellite problems;<br>
+											- Other issues, such as: interference with other satellites, mission
+											planning system errors, bad weather.<br>
+											In the Details boxes, the individual problem per each Ground Station is
+											reported. Click on a pie chart to display the anomalies responsible for the
+											acquisition service failures. By default, results are referred to the
+											previous completed quarter.
 										</div>
 									</div>
 								</div>
@@ -81,7 +93,7 @@
 		<!-- Restricted Data -->
 		<!-- Global statistics -->
 		<div class="row">
-			<div class="col-sm-6 col-md-3">
+			<div class="col-md-6">
 				<div class="card card-stats card-round">
 					<div class="card-body ">
 						<div class="row">
@@ -93,7 +105,7 @@
 							<div class="col-7 col-stats">
 								<div class="numbers">
 									<p class="card-category">Total planned acquisitions</p>
-									<h4 class="card-title" id="planned-acquisitions-global-box">
+									<h4 class="card-title" id="planned-acquisitions-global-box-mod">
 										<div class="spinner">
 											<div class="bounce1"></div>
 											<div class="bounce2"></div>
@@ -106,7 +118,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6 col-md-3">
+			<div class="col-md-6">
 				<div class="card card-stats card-round">
 					<div class="card-body ">
 						<div class="row">
@@ -118,7 +130,7 @@
 							<div class="col-7 col-stats">
 								<div class="numbers">
 									<p class="card-category">Successful acquisitions</p>
-									<h4 class="card-title" id="successful-acquisitions-global-box">
+									<h4 class="card-title" id="successful-acquisitions-global-box-mod">
 										<div class="spinner">
 											<div class="bounce1"></div>
 											<div class="bounce2"></div>
@@ -131,7 +143,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6 col-md-3">
+			<div class="col-md-4">
 				<div class="card card-stats card-round">
 					<div class="card-body">
 						<div class="row">
@@ -143,7 +155,7 @@
 							<div class="col-7 col-stats">
 								<div class="numbers">
 									<p class="card-category">Failures due to Satellite issues</p>
-									<h4 class="card-title" id="satellite-failures-global-box">
+									<h4 class="card-title" id="satellite-failures-global-box-mod">
 										<div class="spinner">
 											<div class="bounce1"></div>
 											<div class="bounce2"></div>
@@ -156,7 +168,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-6 col-md-3">
+			<div class="col-md-4">
 				<div class="card card-stats card-round">
 					<div class="card-body">
 						<div class="row">
@@ -168,7 +180,32 @@
 							<div class="col-7 col-stats">
 								<div class="numbers">
 									<p class="card-category">Failures due to Acquisition Service issues</p>
-									<h4 class="card-title" id="acquisition-failures-global-box">
+									<h4 class="card-title" id="acquisition-failures-global-box-mod">
+										<div class="spinner">
+											<div class="bounce1"></div>
+											<div class="bounce2"></div>
+											<div class="bounce3"></div>
+										</div>
+									</h4>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-4">
+				<div class="card card-stats card-round">
+					<div class="card-body">
+						<div class="row">
+							<div class="col-5">
+								<div class="icon-big text-center">
+									<i class="flaticon-error text-danger"></i>
+								</div>
+							</div>
+							<div class="col-7 col-stats">
+								<div class="numbers">
+									<p class="card-category">Failures due to Other causes (RFI, bad weather, MPS)</p>
+									<h4 class="card-title" id="other-failures-global-box-mod">
 										<div class="spinner">
 											<div class="bounce1"></div>
 											<div class="bounce2"></div>
@@ -190,7 +227,7 @@
 			<div class="col-md-4">
 				<div class="card card-secondary">
 					<div class="card-body skew-shadow">
-						<h1 id="svalbard-station-box">
+						<h1 id="svalbard-station-box-mod">
 							<div class="spinner">
 								<div class="bounce1"></div>
 								<div class="bounce2"></div>
@@ -199,7 +236,7 @@
 						</h1>
 						<h5 class="op-8">Successful passes over Svalbard</h5>
 						<div class="pull-right">
-							<h3 class="fw-bold op-8" id="svalbard-station-box-perc">
+							<h3 class="fw-bold op-8" id="svalbard-station-box-perc-mod">
 								<div class="spinner">
 									<div class="bounce1"></div>
 									<div class="bounce2"></div>
@@ -215,7 +252,7 @@
 			<div class="col-md-4">
 				<div class="card card-secondary">
 					<div class="card-body skew-shadow">
-						<h1 id="inuvik-station-box">
+						<h1 id="inuvik-station-box-mod">
 							<div class="spinner">
 								<div class="bounce1"></div>
 								<div class="bounce2"></div>
@@ -224,7 +261,7 @@
 						</h1>
 						<h5 class="op-8">Successful passes over Inuvik</h5>
 						<div class="pull-right">
-							<h3 class="fw-bold op-8" id="inuvik-station-box-perc">
+							<h3 class="fw-bold op-8" id="inuvik-station-box-perc-mod">
 								<div class="spinner">
 									<div class="bounce1"></div>
 									<div class="bounce2"></div>
@@ -240,7 +277,7 @@
 			<div class="col-md-4">
 				<div class="card card-secondary">
 					<div class="card-body skew-shadow">
-						<h1 id="matera-station-box">
+						<h1 id="matera-station-box-mod">
 							<div class="spinner">
 								<div class="bounce1"></div>
 								<div class="bounce2"></div>
@@ -249,7 +286,7 @@
 						</h1>
 						<h5 class="op-8">Successful passes over Matera</h5>
 						<div class="pull-right">
-							<h3 class="fw-bold op-8" id="matera-station-box-perc">
+							<h3 class="fw-bold op-8" id="matera-station-box-perc-mod">
 								<div class="spinner">
 									<div class="bounce1"></div>
 									<div class="bounce2"></div>
@@ -265,7 +302,7 @@
 			<div class="col-md-4">
 				<div class="card card-secondary">
 					<div class="card-body skew-shadow">
-						<h1 id="maspalomas-station-box">
+						<h1 id="maspalomas-station-box-mod">
 							<div class="spinner">
 								<div class="bounce1"></div>
 								<div class="bounce2"></div>
@@ -274,7 +311,7 @@
 						</h1>
 						<h5 class="op-8">Successful passes over Maspalomas</h5>
 						<div class="pull-right">
-							<h3 class="fw-bold op-8" id="maspalomas-station-box-perc">
+							<h3 class="fw-bold op-8" id="maspalomas-station-box-perc-mod">
 								<div class="spinner">
 									<div class="bounce1"></div>
 									<div class="bounce2"></div>
@@ -290,7 +327,7 @@
 			<div class="col-md-4">
 				<div class="card card-secondary">
 					<div class="card-body skew-shadow">
-						<h1 id="neustrelitz-station-box">
+						<h1 id="neustrelitz-station-box-mod">
 							<div class="spinner">
 								<div class="bounce1"></div>
 								<div class="bounce2"></div>
@@ -299,7 +336,7 @@
 						</h1>
 						<h5 class="op-8">Successful passes over Neustrelitz</h5>
 						<div class="pull-right">
-							<h3 class="fw-bold op-8" id="neustrelitz-station-box-perc">
+							<h3 class="fw-bold op-8" id="neustrelitz-station-box-perc-mod">
 								<div class="spinner">
 									<div class="bounce1"></div>
 									<div class="bounce2"></div>
@@ -315,7 +352,7 @@
 			<div class="col-md-4">
 				<div class="card card-secondary">
 					<div class="card-body skew-shadow">
-						<h1 id="edrs-box">
+						<h1 id="edrs-box-mod">
 							<div class="spinner">
 								<div class="bounce1"></div>
 								<div class="bounce2"></div>
@@ -324,7 +361,7 @@
 						</h1>
 						<h5 class="op-8">Successful passes using EDRS</h5>
 						<div class="pull-right">
-							<h3 class="fw-bold op-8" id="edrs-box-perc">
+							<h3 class="fw-bold op-8" id="edrs-box-perc-mod">
 								<div class="spinner">
 									<div class="bounce1"></div>
 									<div class="bounce2"></div>
@@ -344,15 +381,17 @@
 			<!-- Svalbard -->
 			<div class="col-md-6">
 				<div class="card">
-					<div class="card-header row">
-						<div class="card-title">Svalbard Acquisition Service availability</div>
-						<i class="la flaticon-search-1 ml-2 mt-1" data-placement="bottom"
-								   data-toggle="tooltip" onclick="acquisitionService.showAcquisitionStatistics('svalbard')"
-								   title="Display the Svalbard acquisitions statistics"></i>
+					<div class="card-header">
+						<div class="row">
+							<div class="card-title ml-3">Svalbard Acquisition Service availability</div>
+							<i class="la flaticon-search-1 ml-2 mt-1" data-placement="bottom"
+									   data-toggle="tooltip" onclick="acquisitionServiceMod.showAcquisitionStatistics('svalbard')"
+									   title="Display the Svalbard acquisitions statistics"></i>
+						</div>
 					</div>
 					<div class="card-body">
 						<div class="chart-container">
-							<canvas id="svalbard-station-pie-chart" style="width: 50%; height: 50%"></canvas>
+							<canvas id="svalbard-station-pie-chart-mod" style="width: 50%; height: 50%"></canvas>
 						</div>
 					</div>
 				</div>
@@ -361,15 +400,17 @@
 			<!-- Inuvik -->
 			<div class="col-md-6">
 				<div class="card">
-					<div class="card-header row">
-						<div class="card-title">Inuvik Acquisition Service availability</div>
-						<i class="la flaticon-search-1 ml-2 mt-1" data-placement="bottom"
-								   data-toggle="tooltip" onclick="acquisitionService.showAcquisitionStatistics('inuvik')"
-								   title="Display the Inuvik acquisitions statistics"></i>
+					<div class="card-header">
+						<div class="row">
+						<div class="card-title ml-3">Inuvik Acquisition Service availability</div>
+							<i class="la flaticon-search-1 ml-2 mt-1" data-placement="bottom"
+									   data-toggle="tooltip" onclick="acquisitionServiceMod.showAcquisitionStatistics('inuvik')"
+									   title="Display the Inuvik acquisitions statistics"></i>
+						</div>
 					</div>
 					<div class="card-body">
 						<div class="chart-container">
-							<canvas id="inuvik-station-pie-chart" style="width: 50%; height: 50%"></canvas>
+							<canvas id="inuvik-station-pie-chart-mod" style="width: 50%; height: 50%"></canvas>
 						</div>
 					</div>
 				</div>
@@ -378,15 +419,17 @@
 			<!-- Matera -->
 			<div class="col-md-6">
 				<div class="card">
-					<div class="card-header row">
-						<div class="card-title">Matera Acquisition Service availability</div>
-						<i class="la flaticon-search-1 ml-2 mt-1" data-placement="bottom"
-								   data-toggle="tooltip" onclick="acquisitionService.showAcquisitionStatistics('matera')"
-								   title="Display the Matera acquisitions statistics"></i>
+					<div class="card-header">
+						<div class="row">
+							<div class="card-title ml-3">Matera Acquisition Service availability</div>
+							<i class="la flaticon-search-1 ml-2 mt-1" data-placement="bottom"
+									   data-toggle="tooltip" onclick="acquisitionServiceMod.showAcquisitionStatistics('matera')"
+									   title="Display the Matera acquisitions statistics"></i>
+						</div>
 					</div>
 					<div class="card-body">
 						<div class="chart-container">
-							<canvas id="matera-station-pie-chart" style="width: 50%; height: 50%"></canvas>
+							<canvas id="matera-station-pie-chart-mod" style="width: 50%; height: 50%"></canvas>
 						</div>
 					</div>
 				</div>
@@ -395,15 +438,17 @@
 			<!-- Maspalomas -->
 			<div class="col-md-6">
 				<div class="card">
-					<div class="card-header row">
-						<div class="card-title">Maspalomas Acquisition Service availability</div>
-						<i class="la flaticon-search-1 ml-2 mt-1" data-placement="bottom"
-								   data-toggle="tooltip" onclick="acquisitionService.showAcquisitionStatistics('maspalomas')"
-								   title="Display the Maspalomas acquisitions statistics"></i>
+					<div class="card-header">
+						<div class="row">
+							<div class="card-title ml-3">Maspalomas Acquisition Service availability</div>
+							<i class="la flaticon-search-1 ml-2 mt-1" data-placement="bottom"
+									   data-toggle="tooltip" onclick="acquisitionServiceMod.showAcquisitionStatistics('maspalomas')"
+									   title="Display the Maspalomas acquisitions statistics"></i>
+						</div>
 					</div>
 					<div class="card-body">
 						<div class="chart-container">
-							<canvas id="maspalomas-station-pie-chart" style="width: 50%; height: 50%"></canvas>
+							<canvas id="maspalomas-station-pie-chart-mod" style="width: 50%; height: 50%"></canvas>
 						</div>
 					</div>
 				</div>
@@ -412,15 +457,17 @@
 			<!-- Neustrelitz -->
 			<div class="col-md-6">
 				<div class="card">
-					<div class="card-header row">
-						<div class="card-title">Neustrelitz Acquisition Service availability</div>
-						<i class="la flaticon-search-1 ml-2 mt-1" data-placement="bottom"
-								   data-toggle="tooltip" onclick="acquisitionService.showAcquisitionStatistics('neustrelitz')"
-								   title="Display the Neustrelitz acquisitions statistics"></i>
+					<div class="card-header">
+						<div class="row">
+							<div class="card-title ml-3">Neustrelitz Acquisition Service availability</div>
+							<i class="la flaticon-search-1 ml-2 mt-1" data-placement="bottom"
+									   data-toggle="tooltip" onclick="acquisitionServiceMod.showAcquisitionStatistics('neustrelitz')"
+									   title="Display the Neustrelitz acquisitions statistics"></i>
+						</div>
 					</div>
 					<div class="card-body">
 						<div class="chart-container">
-							<canvas id="neustrelitz-station-pie-chart" style="width: 50%; height: 50%"></canvas>
+							<canvas id="neustrelitz-station-pie-chart-mod" style="width: 50%; height: 50%"></canvas>
 						</div>
 					</div>
 				</div>
@@ -429,15 +476,17 @@
 			<!-- EDRS -->
 			<div class="col-md-6">
 				<div class="card">
-					<div class="card-header row">
-						<div class="card-title">EDRS Acquisition Service availability</div>
-						<i class="la flaticon-search-1 ml-2 mt-1" data-placement="bottom"
-								   data-toggle="tooltip" onclick="acquisitionService.showAcquisitionStatistics('edrs')"
-								   title="Display the EDRS acquisitions statistics"></i>
+					<div class="card-header">
+						<div class="row">
+							<div class="card-title ml-3">EDRS Acquisition Service availability</div>
+							<i class="la flaticon-search-1 ml-2 mt-1" data-placement="bottom"
+									   data-toggle="tooltip" onclick="acquisitionServiceMod.showAcquisitionStatistics('edrs')"
+									   title="Display the EDRS acquisitions statistics"></i>
+						</div>
 					</div>
 					<div class="card-body">
 						<div class="chart-container">
-							<canvas id="edrs-pie-chart" style="width: 50%; height: 50%"></canvas>
+							<canvas id="edrs-pie-chart-mod" style="width: 50%; height: 50%"></canvas>
 						</div>
 					</div>
 				</div>
@@ -454,7 +503,7 @@
 {% block javascripts %}
 
 	<script src="/static/assets/js/plugin/chart.js/chart.min.js"></script>
-	<script src="/static/assets/js/quarterly-reports/acquisition-service.js"></script>
-	<script defer type="text/javascript">acquisitionService.init();</script>
+	<script src="/static/assets/js/quarterly-reports/acquisition-service-mod.js"></script>
+	<script defer type="text/javascript">acquisitionServiceMod.init();</script>
 
 {% endblock javascripts %}

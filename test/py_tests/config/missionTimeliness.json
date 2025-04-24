@@ -1,0 +1,118 @@
+{
+  "product_levels":["L0_", "L1_", "L2_", "L1C", "L2A", "L1B"],
+  "timeliness_types": ["NRT", "STC", "NTC"],
+  "S1": {
+    "constraints":
+      {
+        "product_class": "S"
+      },
+    "NRT": {
+      "timeliness": "NRT",
+      "thresholds":
+          {"threshold": 3
+          }
+    },
+    "NTC": {
+      "timeliness": "NTC",
+      "thresholds":
+          {"threshold": 24}
+    }
+  },
+  "S2": {
+    "constraints":
+      {
+        "product_level": ["L1_", "L2_"]
+      },
+    "partitions":
+      {
+        "product_level": ["L1_", "L2_"]
+      },
+    "NTC": {
+      "timeliness": "NOMINAL",
+      "thresholds":
+          {"threshold": 7}
+    }
+  },
+  "S3": {
+    "sensors": {
+      "OLCI": {"product_type": ["OL_1_ERR___", "OL_1_EFR___", "OL_2_LFR___", "OL_2_LRR___"]},
+      "SLSTR": {"product_type": ["SL_1_RBT___", "SL_2_FRP___", "SL_2_LST___"]},
+      "SRAL": {"product_type": ["SR_1_SRA___", "SR_1_SRA_A_", "SR_1_SRA_BS",
+        "SR_2_LAN___", "SR_2_LAN_HY", "SR_2_LAN_LI", "SR_2_LAN_SI"]},
+      "SYN": {"product_type": [
+        "SY_2_AOD___",
+        "SY_2_SYN___", "SY_2_VGK___", "SY_2_VGP___"]}
+    },
+    "NRT": {
+      "timeliness": "NR",
+      "thresholds": [
+        {
+          "threshold": "3",
+          "sensor": "OLCI"
+        },
+        {
+          "threshold": "3",
+          "sensor": "SLSTR"
+        },
+        {
+          "threshold": "3",
+          "sensor": "SRAL"
+        }
+      ]
+    },
+    "STC": {
+      "timeliness": "ST",
+      "thresholds": [{
+        "sensor": "SRAL",
+        "threshold": 48
+      },
+      {
+        "sensor": "SYN",
+        "threshold": 48
+      }]
+    },
+    "NTC": {
+      "timeliness": "NT",
+      "thresholds": [
+        {
+          "sensor": "OLCI",
+          "threshold": 720
+        },
+        {
+          "sensor": "SLSTR",
+          "threshold": 720
+        },
+        {
+          "sensor": "SRAL",
+          "threshold": 720
+        },
+        {
+          "sensor": "SYN",
+          "threshold": 720
+        }
+      ]
+    }
+  },
+"S5": {
+  "NRT": {
+    "timeliness": "NRTI",
+    "thresholds": {
+      "threshold": 3,
+      "product_level": "L2_"
+    }
+  },
+  "NTC": {
+    "timeliness": "OFFL",
+    "thresholds": [
+      {
+        "threshold": 7,
+        "product_level": "L1_"
+      },
+      {
+        "threshold": 72,
+        "product_level": "L2_"
+      }
+    ]
+  }
+}
+}

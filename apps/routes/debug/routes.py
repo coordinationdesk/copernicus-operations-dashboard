@@ -133,7 +133,7 @@ def get_cds_publication_by_mission(start_date, end_date, platform):
             ]
         }
         }
-        # Add criteria to query , according to configuration, based on mission
+        # Add criteria to query , according to configuration.py, based on mission
         mission_extra_criteria = mission_pub_extra_must_criteria.get(mission, None)
         mission_mustnot_extra = mission_pub_extra_must_not_criteria.get(mission, None)
         # We assume that:

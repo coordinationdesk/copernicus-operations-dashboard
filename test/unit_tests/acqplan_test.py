@@ -7,9 +7,9 @@ import unittest
 import apps.ingestion.news_scraper as scraper
 import apps.utils.html_utils as html_utils
 from apps.cache.cache import ConfigCache
-from apps.ingestion.acq_plan_ingestor import AcqPlanIngestor, \
-    select_acq_link_after, select_acq_link_before, select_acq_link_includes_after_n_days_past
-from apps.ingestion.acq_link_page import SatelliteAcqPlanLink, AcqLinksTable, AcqPlanLinksPageParser
+from apps.ingestion.acq_plan_ingestor import AcqPlanIngestor
+from apps.ingestion.acquisition_plans.acq_link_page import SatelliteAcqPlanLink, AcqLinksTable, \
+    AcqPlanLinksPageParser, select_acq_link_after, select_acq_link_before
 
 logger = logging.getLogger(__name__)
 
@@ -96,6 +96,10 @@ class AcqPlanTestCase(unittest.TestCase):
         slink_1 = SatelliteAcqPlanLink("/d/sentinel/s4a_mp_user_20230512t174000_20230618t194000", "https://abc")
         self.assertEqual("/d/sentinel/s4a_mp_user_20230512t174000_20230618t194000", slink_1.ref_url)
         self.assertEqual("2023-05-12 17:40:00", slink_1.start_date.strftime("%Y-%m-%d %H:%M:%S"))
+
+        slink_2 = SatelliteAcqPlanLink("https://abc/d/sentinel/s4a_mp_user_20230512t174000_20230618t194000", "https://abc")
+        self.assertEqual("/d/sentinel/s4a_mp_user_20230512t174000_20230618t194000", slink_2.ref_url)
+        self.assertEqual("2023-05-12 17:40:00", slink_2.start_date.strftime("%Y-%m-%d %H:%M:%S"))
 
     # Test On Archive Page
     # TEst On year Zip Page

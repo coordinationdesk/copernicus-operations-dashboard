@@ -1,0 +1,150 @@
+{
+  "current_publication_service": "DAS",
+  "active_publication_services": ["DAS"],
+  "product_levels":["L0_", "L1_", "L2_", "L1C", "L2A", "L1B"],
+  "S1": {
+    "file_ending": "SAFE.zip",
+    "levels": {
+      "L0_": [
+        "EW_RAW__0S",
+        "IW_RAW__0S",
+        "RF_RAW__0S",
+        "S1_RAW__0S",
+        "S2_RAW__0S",
+        "S3_RAW__0S",
+        "S4_RAW__0S",
+        "S5_RAW__0S",
+        "S6_RAW__0S",
+        "WV_RAW__0S",
+        "EW_ETA__AX",
+        "IW_ETA__AX",
+        "S1_ETA__AX",
+        "S2_ETA__AX",
+        "S3_ETA__AX",
+        "S4_ETA__AX",
+        "S5_ETA__AX",
+        "S6_ETA__AX"
+      ],
+      "L1_": [
+        "EW_GRDM_1S",
+        "EW_SLC__1S",
+        "IW_GRDH_1S",
+        "IW_SLC__1S",
+        "S1_GRDH_1S",
+        "S1_SLC__1S",
+        "S2_GRDH_1S",
+        "S2_SLC__1S",
+        "S3_GRDH_1S",
+        "S3_SLC__1S",
+        "S4_GRDH_1S",
+        "S4_SLC__1S",
+        "S5_GRDH_1S",
+        "S5_SLC__1S",
+        "S6_GRDH_1S",
+        "S6_SLC__1S",
+        "WV_SLC__1S"
+      ],
+      "L2_": [
+        "EW_OCN__2S",
+        "IW_OCN__2S",
+        "S1_OCN__2S",
+        "S2_OCN__2S",
+        "S3_OCN__2S",
+        "S4_OCN__2S",
+        "S5_OCN__2S",
+        "S6_OCN__2S",
+        "WV_OCN__2S"
+      ]
+    }
+  },
+  "S2": {
+    "file_ending": "tar",
+    "levels": {
+      "L1C": [
+        "MSI_L1C___",
+        "MSI_L1C_DS",
+        "MSI_L1C_TC",
+        "MSI_L1C_TL"
+      ],
+      "L2A": [
+        "MSI_L2A___",
+        "MSI_L2A_DS",
+        "MSI_L2A_TC",
+        "MSI_L2A_TL"
+      ]
+    }
+  },
+  "S3": {
+    "file_ending": "SEN3.zip",
+    "levels": {
+      "L1_": [
+        "OL_1_EFR___",
+        "OL_1_ERR___",
+        "SL_1_RBT___",
+        "OL_1_RAC___",
+        "OL_1_SPC___",
+        "SR_1_SRA___",
+        "SR_1_SRA_A_",
+        "SR_1_SRA_BS"
+      ],
+      "L2_": [
+        "OL_2_LFR___",
+        "OL_2_LRR___",
+        "SL_2_FRP___",
+        "SL_2_LST___",
+        "SR_2_LAN___",
+        "SR_2_LAN_HY",
+        "SR_2_LAN_LI",
+        "SR_2_LAN_SI",
+        "SY_2_AOD___",
+        "SY_2_SYN___",
+        "SY_2_VGK___",
+        "SY_2_VGP___",
+"SY_2_V10___"
+      ]
+    }
+  },
+"S5": {"file_ending": "nc",
+  "levels": {
+    "L1B": [
+    "OFFL_L1B_IR_SIR",
+    "OFFL_L1B_IR_UVN",
+    "OFFL_L1B_RA_BD1",
+    "OFFL_L1B_RA_BD2",
+    "OFFL_L1B_RA_BD3",
+    "OFFL_L1B_RA_BD4",
+    "OFFL_L1B_RA_BD5",
+    "OFFL_L1B_RA_BD6",
+    "OFFL_L1B_RA_BD7",
+    "OFFL_L1B_RA_BD8"
+    ],
+    "L2_": [
+    "NRTI_L2__AER_AI",
+    "NRTI_L2__AER_LH",
+    "NRTI_L2__CH4___",
+    "NRTI_L2__CLOUD_",
+    "NRTI_L2__CO____",
+    "NRTI_L2__HCHO__",
+    "NRTI_L2__NO2___",
+    "NRTI_L2__O3____",
+    "NRTI_L2__O3__PR",
+    "NRTI_L2__O3_TCL",
+    "NRTI_L2__SO2___",
+    "OFFL_L2__AER_AI",
+    "OFFL_L2__AER_LH",
+    "OFFL_L2__CH4___",
+    "OFFL_L2__CLOUD_",
+    "OFFL_L2__CO____",
+    "OFFL_L2__HCHO__",
+    "OFFL_L2__NO2___",
+    "OFFL_L2__NP_BD3",
+    "OFFL_L2__NP_BD6",
+    "OFFL_L2__NP_BD7",
+    "OFFL_L2__O3____",
+    "OFFL_L2__O3__PR",
+    "OFFL_L2__O3_TCL",
+    "OFFL_L2__SO2___"
+    ]}
+  }
+
+}
